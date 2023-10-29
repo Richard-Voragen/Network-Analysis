@@ -27,11 +27,31 @@ for timestamp, data in pcap:
     if name == "TCP":
         if tcp.dport == 80:
             httpReq += 1
+            try:
+                httpDat = dpkt.http.Request(tcp.data)
+                print (httpDat.headers)
+            except:
+                pass
         if tcp.sport == 80:
+            try:
+                httpDat = dpkt.http.Request(tcp.data)
+                print (httpDat.headers)
+            except:
+                pass
             httpsRes += 1
         if tcp.dport == 443:
+            try:
+                httpDat = dpkt.https.Request(tcp.data)
+                print (httpDat.headers)
+            except:
+                pass
             httpsReq += 1
         if tcp.sport == 443:
+            try:
+                httpDat = dpkt.https.Request(tcp.data)
+                print (httpDat.headers)
+            except:
+                pass
             httpsRes += 1
         
     
