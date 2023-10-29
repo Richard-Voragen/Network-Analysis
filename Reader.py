@@ -1,6 +1,6 @@
 import dpkt
 
-f = open("test.pcap", 'rb')
+f = open("Problem_1/Part1.pcap", 'rb')
 pcap = dpkt.pcap.Reader(f)
 
 dict = {}
