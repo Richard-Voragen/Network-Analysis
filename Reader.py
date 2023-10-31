@@ -1,9 +1,11 @@
 import dpkt
+import socket
 
-f = open("ass1_1.pcap", 'rb')
+f = open("Problem_1/Part5.pcap", 'rb')
 pcap = dpkt.pcap.Reader(f)
 
 dict = {}
+ips = {}
 httpReq = 0
 httpRes = 0
 httpsReq = 0
@@ -27,33 +29,44 @@ for timestamp, data in pcap:
     if name == "TCP":
         if tcp.dport == 80:
             httpReq += 1
-            try:
-                httpDat = dpkt.http.Request(tcp.data)
-                print (httpDat.headers)
-            except:
-                pass
         if tcp.sport == 80:
-            try:
-                httpDat = dpkt.http.Request(tcp.data)
-                print (httpDat.headers)
-            except:
-                pass
             httpsRes += 1
         if tcp.dport == 443:
-            try:
-                httpDat = dpkt.https.Request(tcp.data)
-                print (httpDat.headers)
-            except:
-                pass
             httpsReq += 1
         if tcp.sport == 443:
-            try:
-                httpDat = dpkt.https.Request(tcp.data)
-                print (httpDat.headers)
-            except:
-                pass
             httpsRes += 1
+
+    name = ""
+    try:
+        name = socket.inet_ntoa(ip.dst).__str__()
+        ips[name] = ips[name] + " " + timestamp.__str__()
+    except KeyError:
+        ips[name] = timestamp.__str__()
+    except:
+        pass
         
+for time in ips:
+    splitted = ips[time].split(' ')
+    iterator = 3
+    try:
+        print("& " + time + " & " + splitted[0] + ", " + splitted[1] + ", " + splitted[2] + ", \\\\")
+    except:
+        try: 
+            print("& " + time + " & " + splitted[0] + ", " + splitted[1] + ", \\\\")
+        except:
+            print("& " + time + " & " + splitted[0] + " \\\\")
+    while (iterator < len(splitted)):
+        try:
+            print("& & " + splitted[iterator] + ", " + splitted[iterator+1] + ", " + splitted[iterator+2] + ", \\\\")
+        except:
+            try: 
+                print("& & " + splitted[iterator] + ", " + splitted[iterator+1] + ", \\\\")
+            except:
+                print("& & " + splitted[iterator] + " \\\\")
+        iterator += 3
+    print ("\cline{2-3}")
+
     
+
 print(dict)
 print("Http Requests: ", httpReq, " Http Responses: ", httpRes, " Https Requests: ", httpsReq, "Https Responses: ", httpsRes)
