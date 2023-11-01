@@ -2,6 +2,9 @@ import requests
 
 print("Hi")
 
-login = {'Student-Id', '918630041'}
+s = requests.Session()
+s.auth = ('user', 'pass')
+s.headers.update({'Student-Id': '9186380041'})
 
-r = requests.get('https://kartik-labeling-cvpr-0ed3099180c2.herokuapp.com/ecs152a_ass1', headers=login)
+# both 'x-test' and 'x-test2' are sent
+s.get('http://httpbin.org/headers', headers={'Student-Id': '9186380041'})
