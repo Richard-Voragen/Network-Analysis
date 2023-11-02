@@ -24,5 +24,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as server_socket: # specif
 
             throughput_converted = str(throughput).encode()
             server_socket.sendto(throughput_converted, addr)
+
+            exit() # run server.py again to get correct initial_time
         else:
             server_socket.sendto(b'Z', addr)
