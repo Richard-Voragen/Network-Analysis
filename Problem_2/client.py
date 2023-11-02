@@ -9,4 +9,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as client_socket: # create
         client_socket.sendto(message, (SERVER_HOST, SERVER_PORT))
 
         throughput, _ = client_socket.recvfrom(1024)
-        print(str(throughput)[2:-1], "kilobytes / second")
+        if str(throughput)[2:-1] == 'Z':
+            continue
+        else:
+            print(str(throughput)[2:-1], "kilobytes / second")
