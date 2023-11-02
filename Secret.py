@@ -21,7 +21,10 @@ for timestamp, data in pcap:
             try:
                 httpDat = dpkt.http.Request(tcp.data)
                 
-                print("On transmission: ", count, " The client sent the server: ", tcp.__str__()[tcp.__str__().rfind('\\x')+4:])
+                secret_line = httpDat.__str__()[httpDat.__str__().find("secret"):]
+                secret = secret_line[:secret_line.find("\n")]
+                print(secret)
+                #print(httpDat.__str__())
             except:
                 pass
         if tcp.sport == 80:
