@@ -27,18 +27,17 @@ def findHttpHeaders(file_path):
                         secret_line = http_request.__str__()[http_request.__str__().find("secret"):]
                         secret = secret_line[:secret_line.find("\n")]
                         print("Packet:", count, "\t", secret)
-                    except dpkt.dpkt.NeedData:
+                    except:
                         pass
 
                 if tcp.dport in {80, 443} or tcp.sport in {80, 443}:
                     try:
                         http_request = dpkt.http.Request(tcp.data)
-                        print(http_request.headers)
-                    except dpkt.dpkt.NeedData:
+                    except:
                         pass
 
     except FileNotFoundError:
         print(f"File not found: {file_path}")
 
 if __name__ == "__main__":
-    findHttpHeaders("ass1_1.pcap")
+    findHttpHeaders("../ass1_1.pcap")

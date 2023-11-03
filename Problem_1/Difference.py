@@ -17,13 +17,10 @@ def RunAnalysis(file):
 
         ip = eth.data
         print(count.__str__() + ",", socket.inet_ntoa(ip.src).__str__() + ",", socket.inet_ntoa(ip.dst))
-        tcp = ip.data
 
-        if (ip.data.__str__()[-96:] == "x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\'"):
-            type = "ping"
+        if (ip.data.__str__()[-96:] == ("x00\\" * 23) + "x00\'"):
             ping += 1
         else:
-            type = "pong"
             pong += 1
 
     print ("Total Pings: ", ping, " Total Pongs: ", pong)

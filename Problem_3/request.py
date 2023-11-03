@@ -9,6 +9,10 @@ print(outputStr[:outputStr.find(',')])
 # response with proxy
 print(("_" * 50) + "\nRESPONSE WITH PROXY", "\n" + ("_" * 50))
 proxy = "http://localhost:9000"
-output = requests.get('https://kartik-labeling-cvpr-0ed3099180c2.herokuapp.com/ecs152a_ass1', proxies={'http': proxy, 'https': proxy}, headers={'Student-Id': '918630041'}, verify=False)
+try:
+    output = requests.get('https://kartik-labeling-cvpr-0ed3099180c2.herokuapp.com/ecs152a_ass1', proxies={'http': proxy, 'https': proxy}, headers={'Student-Id': '918630041'}, verify=False)
+except:
+    print("Mitmproxy not running on port 9000")
+    exit()
 outputStr = output.headers.__str__()[output.headers.__str__().find('\'Ecs152a-Resp'):]
 print(outputStr[:outputStr.find(',')])

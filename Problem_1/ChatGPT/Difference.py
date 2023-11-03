@@ -24,14 +24,19 @@ def analyze_pcap(file_path):
             src_ip = socket.inet_ntoa(ip.src)
             dst_ip = socket.inet_ntoa(ip.dst)
 
-            if ip.data.endswith(b'\x00' * 24):
-                message_type = "ping"
-                ping_count += 1
+            # Check if it's an ICMP packet
+            if isinstance(ip.data, dpkt.icmp.ICMP):
+                icmp_type = ip.data.type
+                if (ip.data.__str__()[-96:] == ("x00\\" * 23) + "x00\'"):  # ICMP Echo Request (ping)
+                    message_type = "ping"
+                    ping_count += 1
+                else:  # ICMP Echo Reply (pong)
+                    message_type = "pong"
+                    pong_count += 1
             else:
-                message_type = "pong"
-                pong_count += 1
+                message_type = "non-ICMP"
 
-            print(f"{count}, {src_ip}, {dst_ip}, {message_type}")
+            print(f"{count}, {src_ip}, {dst_ip}")
 
     print("Total Pings:", ping_count, "Total Pongs:", pong_count)
 
