@@ -7,7 +7,7 @@ PORT = 5500
 with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as server_socket: # specify UDP socket, store as server_socket
     server_socket.bind((HOST, PORT)) # bind socket object
 
-    initial_time = time.time() # issues: have client pass this value to server?
+    initial_time = 0
     total_data = 0
 
     while True:
@@ -16,6 +16,9 @@ with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as server_socket: # specif
 
         total_data += len(data)
         print(total_data, "bytes received")
+
+        if initial_time == 0:
+            initial_time = time.time()
 
         if total_data == 100000:
             print("Data limit reached")

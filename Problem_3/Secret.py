@@ -16,7 +16,10 @@ def findHttpHeaders(file):
         tcp = ip.data
 
         name = ""
-        name = ip.get_proto(ip.p).__name__
+        try:
+            name = ip.get_proto(ip.p).__name__
+        except:
+            pass
 
 
         if name == "TCP":
@@ -49,4 +52,5 @@ def findHttpHeaders(file):
                 except:
                     pass        
 
-findHttpHeaders("BeforeProxy.pcap")
+# findHttpHeaders("BeforeProxy.pcap")
+findHttpHeaders("ass_ass.pcap")
