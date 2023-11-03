@@ -29,20 +29,23 @@ def readProtocolsAndHTTP(file):
             except:
                 pass
 
-            if protocol_name == "TCP":
-                if tcp.dport == HTTP_PORT:
-                    http_req += 1
-                if tcp.sport == HTTP_PORT:
-                    http_res += 1
-                if tcp.dport == HTTPS_PORT:
-                    https_req += 1
-                if tcp.sport == HTTPS_PORT:
-                    https_res += 1
+            try:
+                if protocol_name == "TCP":
+                    if tcp.dport == HTTP_PORT:
+                        http_req += 1
+                    if tcp.sport == HTTP_PORT:
+                        http_res += 1
+                    if tcp.dport == HTTPS_PORT:
+                        https_req += 1
+                    if tcp.sport == HTTPS_PORT:
+                        https_res += 1
+            except:
+                pass
 
         print("Different Application Level Protocols:", dict(protocol_count))
         print(f"Http Requests: {http_req}, Http Responses: {http_res}, Https Requests: {https_req}, Https Responses: {https_res}")
 
 if __name__ == "__main__":
-    pcap_files = ["Part1.pcap", "Part2.pcap", "Part3.pcap", "Part4.pcap", "Part5.pcap"]
+    pcap_files = ["../Part1.pcap", "../Part2.pcap", "../Part3.pcap", "../Part4.pcap", "../Part5.pcap"]
     for file in pcap_files:
         readProtocolsAndHTTP(file)
