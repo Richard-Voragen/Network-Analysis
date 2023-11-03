@@ -38,7 +38,7 @@ def readProtocolsAndHTTP(file):
             if tcp.sport == 443:
                 httpsRes += 1
 
-    print(dict)
+    print("Different Application Level Protocols:", dict)
     print("Http Requests: ", httpReq, " Http Responses: ", httpRes, " Https Requests: ", httpsReq, "Https Responses: ", httpsRes)
 
 readProtocolsAndHTTP("Part1.pcap")
