@@ -52,5 +52,5 @@ def findHttpHeaders(file):
                 except:
                     pass        
 
-# findHttpHeaders("BeforeProxy.pcap")
-findHttpHeaders("AfterProxy.pcap")
+findHttpHeaders("test.pcap")
+#findHttpHeaders("AfterProxy.pcap")
